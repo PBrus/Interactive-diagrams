@@ -1,4 +1,4 @@
-# Interactive-diagrams [![GitHub release](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/ver20170106.svg "download")](https://github.com/PBrus/Interactive-diagrams/blob/master/photometric_diagrams.py) ![Written in Python](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/Python.svg "language")
+# Interactive-diagrams [![GitHub release](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/ver20170108.svg "download")](https://github.com/PBrus/Interactive-diagrams/blob/master/photometric_diagrams.py) ![Written in Python](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/Python.svg "language")
 
 Allows to visualize data on astrophysical diagrams and interact with them. It was written in pure Python.
 
