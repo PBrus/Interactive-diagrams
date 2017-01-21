@@ -12,11 +12,11 @@ Download `photometric_diagrams.py` wherever you want, then make the script execu
 
 ## Usage
 
-To use the program properly, you need to prepare a file with data. At the beginning call the script from the bash console with `-h` option:
+To use the program properly you need to prepare a file with data. At the beginning call the script from the terminal window with the `-h` option:
 ```bash
 $ photometric_diagrams.py -h
 ```
-This will give you description about all options. If you need to see the program in action immediately, please download three additional files from repo to your working directory:
+This will give you a description about all options. If you need to see the program in action immediately, please download three additional files from the repository to your working directory:
 
  * `mags.db`
  * `best.num`
@@ -30,7 +30,9 @@ More advanced call:
 ```bash
 $ photometric_diagrams.py mags.db --col 12 -10 --col 12 -4 --grp best.num green --grp better.num yellow -t
 ```
-In both cases try to click on any point to see changes on diagrams. I encourage to visit my website to see more detailed description of this program. The current link can be found on my [GitHub profile](https://github.com/PBrus).
+In both cases try to click on any point to see changes on diagrams.
+
+I encourage to visit my website to see more detailed description of this program. The current link can be found on my [GitHub profile](https://github.com/PBrus).
 
 ## License
 
