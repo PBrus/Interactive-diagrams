@@ -16,7 +16,7 @@ To use the program properly you need to prepare a file with data. At the beginni
 ```bash
 $ photometric_diagrams.py -h
 ```
-This will give you a description about all options. If you need to see the program in action immediately, please download three additional files from the repository to your working directory:
+This will give you a description of all options. If you need to see the program in action immediately, please download three additional files from the repository to your working directory:
 
  * `mags.db`
  * `best.num`
