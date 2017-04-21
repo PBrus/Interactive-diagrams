@@ -1,8 +1,8 @@
-# Interactive-diagrams [![GitHub release](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/ver20170223.svg "download")](https://github.com/PBrus/Interactive-diagrams/blob/master/photometric_diagrams.py) ![Written in Python](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/Python.svg "language")
+# Interactive-diagrams [![GitHub release](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/ver20170223.svg "download")](https://github.com/pbrus/interactive-diagrams/blob/master/photometric_diagrams.py) ![Written in Python](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/python.svg "language")
 
 This program allows to visualize data on astrophysical diagrams and interact with them. It was written in pure Python.
 
-![photometric_diagrams](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/Phot_diagrams.gif)
+![photometric_diagrams](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/phot-diagrams.gif)
 
 ## Installation
 
@@ -34,7 +34,7 @@ $ photometric_diagrams.py mags.db --col 12 -10 --col 12 -4 --grp best.num green 
 ```
 In both cases try to click on any point to see changes on diagrams.
 
-I encourage to visit my website to see more detailed description of this program. The current link can be found on my [GitHub profile](https://github.com/PBrus).
+I encourage to visit my website to see more detailed description of this program. The current link can be found on my [GitHub profile](https://github.com/pbrus).
 
 ## License
 
