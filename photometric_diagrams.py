@@ -1,10 +1,10 @@
-#!/usr/bin/env python
-# coding=utf-8
+#!/usr/bin/env python3
 
 from argparse import ArgumentParser
-from argparse import RawTextHelpFormatter as tefo   # allow to use a new line within argparse strings
+from argparse import RawTextHelpFormatter as tefo
+from idgrms.files import *
 
-## parse script arguments
+
 argparser = ArgumentParser(prog='photometric_diagrams.py', description='>> Interactive \
 CCD and CMD diagrams <<\n\n Requires Python 2.7 with:\n  * numpy\n  * argparse\n  * matplotlib\n\n',
 epilog='Copyright (c) 2017 Przemysław Bruś', formatter_class=tefo)
@@ -215,9 +215,9 @@ def connect(fig):
 # print the whole line of a marked point from the input file
 def feedback(msk):
     for i,m in enumerate(msk):
-        print "# object",i+1
+        print("# object {}".format(i+1))
         for j in inpt[m]:
-            print j
+            print(j)
 
 # save figures as images
 cnt_img = 1
