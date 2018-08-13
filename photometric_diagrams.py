@@ -12,7 +12,7 @@ argparser.add_argument('input_file', help='must contain columns with data and a 
 The header must be preceded by # sign. Labels from the header \nwill be used to sign axes on charts')
 argparser.add_argument('--col', help="columns which should be used to create \
 the diagram\nA negative value reverses range's axis. There is no limit to the diagrams", \
-nargs=2, dest='col', action='append', metavar=('col_x', 'col_y'), required=True)
+nargs=2, dest='col', action='append', metavar=('col_x', 'col_y'), required=True, type=int)
 argparser.add_argument('--grp', help='group of stars which can be marked by color\n\
 /file/ should contain only one column with ID numbers of stars\nIf this option is used, \
 also /input/ must have ID numbers of stars\nin the first column. The variable /color/ \
