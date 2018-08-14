@@ -25,8 +25,13 @@ def read_file_content(filename):
 
     return file_content
 
+def read_group_file(filename):
+    file_content = _read_file(filename, data_type=int)
+
+    return tuple(file_content)
+
 def unique_columns_list(nested_lists):
-    return [*{*[int(item) for sublist in nested_lists for item in sublist]}]
+    return [*{*[item for sublist in nested_lists for item in sublist]}]
 
 def revert_negative_value(value):
     return value if value > 0 else -value
@@ -49,3 +54,27 @@ def get_data(filename, columns_argument):
                                            column_index),)
 
     return data
+
+# if the --grp option is switched on, do this:
+def get_points_numbers(filename):
+    file_content = read_file_content(filename)
+
+    return tuple(file_content[:,0:1].flatten().astype(int))
+
+def get_single_group_data(filename, color_argument, points_numbers):
+    indexes = ()
+    file_content = read_group_file(filename)
+
+    for number in file_content:
+        indexes += (points_numbers.index(number),)
+
+    return (indexes, color_argument)
+
+def get_group_data(data_filename, group_arguments):
+    group_data = ()
+    points_numbers = get_points_numbers(data_filename)
+
+    for group_argument in group_arguments:
+        group_data += (get_single_group_data(*group_argument, points_numbers),)
+
+    return group_data

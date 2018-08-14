@@ -2,7 +2,7 @@
 
 from argparse import ArgumentParser
 from argparse import RawTextHelpFormatter as tefo
-from idgrms.files import *
+from idgrms.data import *
 
 
 argparser = ArgumentParser(prog='photometric_diagrams.py', description='>> Interactive \
@@ -292,6 +292,7 @@ if fl_grp:
                 id_num += (stars.index(n),)
 
         clrs += ((id_num, grp[i][1]),)
+
     clrtup = clrd_pts(clrs)
 
 background = 'gray'
