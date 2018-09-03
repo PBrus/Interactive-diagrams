@@ -15,35 +15,133 @@ def _read_file(filename, max_lines_number=None,
     return file_content
 
 def read_file_header(filename):
+    """
+    Read a one-line file header.
+
+    Parameters
+    ----------
+    filename : str
+        The name (with a path if neccessary) of the file which contains
+        columns with integers and floats separated by spaces. The file
+        must begin with a one-line header. The header should describe
+        each column and begin with a single '#' sign then a space and the
+        rest of columns labels.
+
+    Returns
+    -------
+    file_header : ndarray
+        A 1D array which elements are unicode strings (labels of each column).
+    """
     file_header = _read_file(filename, max_lines_number=1,
                              comment_mark="//", data_type=None)
 
     return file_header[1:]
 
 def read_file_content(filename):
+    """
+    Read a content of a file without a header.
+
+    Parameters
+    ----------
+    filename : str
+        The name (with a path if neccessary) of the file which contains
+        columns with integers and floats separated by spaces. The first
+        column should contain integers (required by another functions),
+        the rest of them - floats. The file must begin with a one-line
+        header (see read_file_header() function).
+
+    Returns
+    -------
+    file_content : ndarray
+        A 2D array which elements are floats.
+    """
     file_content = _read_file(filename)
 
     return file_content
 
 def read_group_file(filename):
-    file_content = _read_file(filename, data_type=int)
+    """
+    Read a content of a file.
 
-    return tuple(file_content)
+    Parameters
+    ----------
+    filename : str
+        The name (with a path if neccessary) of the file which contains
+        one column with integers.
+
+    Returns
+    -------
+    file_content : tuple
+        A tuple which contains integers.
+    """
+    file_content = tuple(_read_file(filename, data_type=int))
+
+    return file_content
 
 def unique_columns_list(nested_lists):
+    """
+    Flatten the nested list (two levels) and leave unique elements.
+
+    Parameters
+    ----------
+    nested_lists : list
+        A list which contains sublists.
+
+    Returns
+    -------
+    list
+        A list with unique elements from sublists.
+    """
     return [*{*[item for sublist in nested_lists for item in sublist]}]
 
-def revert_negative_value(value):
-    return value if value > 0 else -value
-
 def get_necessary_data_column(file_content, file_header, column_index):
-    index = revert_negative_value(column_index) - 1
+    """
+    Get a specific column from the ndarray object.
+
+    Parameters
+    ----------
+    file_content : ndarray
+        An array with floats values. The data should be read from a file.
+    file_header : ndarray
+        An array which stores a header from the file where file_content
+        comes from.
+    column_index : int
+        Indicates which column to use.
+
+    Returns
+    -------
+    tuple
+        A tuple is made of the column index, the label of column
+        and the column's data.
+    """
+    index = abs(column_index) - 1
     column_data = np.ma.array([])
     column_data = np.append(column_data, file_content[:,index:index+1])
 
     return column_index, file_header[index], column_data
 
 def get_data(filename, columns_argument):
+    """
+    Get specific columns with data.
+
+    Parameters
+    ----------
+    filename : str
+        The name (with a path if neccessary) of the file which contains
+        columns with integers and floats separated by spaces. The first
+        column should contain integers (required by another functions),
+        the rest of them - floats. The file must begin with a one-line
+        header (see read_file_header() function).
+    columns_argument : list
+        A nested list which contains sublists. Each sublist is made of
+        two integers. The numbers are indexes of columns to be used.
+
+    Returns
+    -------
+    tuple
+        A nested tuple contains subtuples. Each subtuple is made of
+        the returned value by the get_necessary_data_column() function.
+    """
     data = ()
     file_header = read_file_header(filename)
     file_content = read_file_content(filename)
