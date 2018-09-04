@@ -21,16 +21,15 @@ def read_file_header(filename):
     Parameters
     ----------
     filename : str
-        The name (with a path if neccessary) of the file which contains
-        columns with integers and floats separated by spaces. The file
-        must begin with a one-line header. The header should describe
-        each column and begin with a single '#' sign then a space and the
-        rest of columns labels.
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The file must begin with a one-line header.
+        The header should describe each column and begin with a single '#'
+        sign then a space and the rest of columns labels.
 
     Returns
     -------
     file_header : ndarray
-        A 1D array which elements are unicode strings (labels of each column).
+        A 1D array which elements are labels of each column.
     """
     file_header = _read_file(filename, max_lines_number=1,
                              comment_mark="//", data_type=None)
@@ -44,11 +43,9 @@ def read_file_content(filename):
     Parameters
     ----------
     filename : str
-        The name (with a path if neccessary) of the file which contains
-        columns with integers and floats separated by spaces. The first
-        column should contain integers (required by another functions),
-        the rest of them - floats. The file must begin with a one-line
-        header (see read_file_header() function).
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats. The file must begin with a one-line header.
 
     Returns
     -------
@@ -66,8 +63,7 @@ def read_group_file(filename):
     Parameters
     ----------
     filename : str
-        The name (with a path if neccessary) of the file which contains
-        one column with integers.
+        The name of the file which contains one column with integers.
 
     Returns
     -------
@@ -111,7 +107,7 @@ def get_necessary_data_column(file_content, file_header, column_index):
     Returns
     -------
     tuple
-        A tuple is made of the column index, the label of column
+        A tuple is made of the column index, the label of the column
         and the column's data.
     """
     index = abs(column_index) - 1
@@ -127,11 +123,9 @@ def get_data(filename, columns_argument):
     Parameters
     ----------
     filename : str
-        The name (with a path if neccessary) of the file which contains
-        columns with integers and floats separated by spaces. The first
-        column should contain integers (required by another functions),
-        the rest of them - floats. The file must begin with a one-line
-        header (see read_file_header() function).
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats. The file must begin with a one-line header.
     columns_argument : list
         A nested list which contains sublists. Each sublist is made of
         two integers. The numbers are indexes of columns to be used.
@@ -153,13 +147,46 @@ def get_data(filename, columns_argument):
 
     return data
 
-# if the --grp option is switched on, do this:
+# If the --grp option is switched on, do this.
 def get_points_numbers(filename):
+    """
+    Get integers from the first column of a file.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats. The file must begin with a one-line header.
+
+    Returns
+    -------
+    tuple
+        A tuple which contains integers from the first column.
+    """
     file_content = read_file_content(filename)
 
     return tuple(file_content[:,0:1].flatten().astype(int))
 
 def get_single_group_data(filename, color_argument, points_numbers):
+    """
+    Transform integers from a file to indexes of points_numbers.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains column with integers.
+    color_argument : str
+        Define a color which marks particular integers from the file.
+    points_numbers : tuple
+        Contains integers.
+
+    Returns
+    -------
+    tuple
+        A tuple which contains a tuple of points indexes and the color
+        name at the end.
+    """
     indexes = ()
     file_content = read_group_file(filename)
 
@@ -169,6 +196,27 @@ def get_single_group_data(filename, color_argument, points_numbers):
     return (indexes, color_argument)
 
 def get_group_data(data_filename, group_arguments):
+    """
+    Make a tuple which elements are returned values
+    by the get_single_group_data() function.
+
+    Parameters
+    ----------
+    data_filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats. The file must begin with a one-line header.
+     group_arguments : list
+        A list which contains sublists. Each sublist is made of two
+        strings. The first one points the name of another file with
+        integers. The second is a color name.
+
+    Returns
+    -------
+    tuple
+        A tuple which contains subtuples. Each subtuple is made of
+        the returned value by the get_single_group_data() function.
+    """
     group_data = ()
     points_numbers = get_points_numbers(data_filename)
 
