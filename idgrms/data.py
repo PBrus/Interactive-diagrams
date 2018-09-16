@@ -147,7 +147,7 @@ def get_data(filename, columns_argument):
 
     return data
 
-# If the --grp option is switched on, do this.
+# If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
     """
     Get integers from the first column of a file.
@@ -224,3 +224,16 @@ def get_group_data(data_filename, group_arguments):
         group_data += (get_single_group_data(*group_argument, points_numbers),)
 
     return group_data
+
+def get_color_data(data_filename, group_arguments, data):
+    group_data = get_group_data(data_filename, group_arguments)
+    color_data = ()
+
+    for one_group_data in group_data:
+        group = ()
+        for one_column_data in data:
+            group += np.take(one_column_data[-1], one_group_data[0]),
+        group += one_group_data[-1],
+        color_data += group,
+
+    return color_data

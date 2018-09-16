@@ -238,62 +238,12 @@ def save_img():
 
 ######################################################################################################
 
-fi = open(args.input_file, "r")
-hr = fi.readline().replace('#','').replace('\r','').replace('\n','').split(' ') # remove hashtags and whitespaces
-fi.seek(0)  # set pointer at the beginning of the input file
-fi.close()
+data = get_data(args.input_file, args.col)
+clrtup = get_color_data(args.input_file, args.grp, data)
 
-# delete null strings
-while hr.count(''):
-    del hr[hr.index('')]
+col_int = args.col
+N = len(data[0][-1])
 
-# read the input file and columns
-inpt = np.genfromtxt(args.input_file, dtype=None)
-N = inpt.shape[0]
-
-# find out which columns must be read
-tmp = []
-for i in col:
-    for j in i:
-        tmp += [int(j)]
-
-col_int = []
-for i in range(Nfig):
-        i *= 2
-        col_int.append([tmp[i],tmp[i+1]])
-
-idx_col = list(set(tmp))
-
-# get specific columns
-data = ()
-for i in idx_col:
-    data += (get_column(i,N,hr),)
-
-# handle groups of stars
-clrtup = ()
-if fl_grp:
-    clrs = ()
-    stars = ()
-    for i in inpt:
-        stars += (i[0],)
-
-    for i in range(Ngrp):
-        id_num = ()
-        num = ()
-        colorfile = grp[i][0]
-        try:
-            num = tuple(np.loadtxt(colorfile, dtype=int)) # get numbers
-        except TypeError:
-            fi = open(colorfile,"r")
-            star = fi.readline()
-            num = int(star.replace('\n','')),
-        for n in num:
-            if n in stars:
-                id_num += (stars.index(n),)
-
-        clrs += ((id_num, grp[i][1]),)
-
-    clrtup = clrd_pts(clrs)
 
 background = 'gray'
 marker = 'red'
