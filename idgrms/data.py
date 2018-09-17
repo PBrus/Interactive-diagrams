@@ -147,6 +147,28 @@ def get_data(filename, columns_argument):
 
     return data
 
+def current_data_indexes(data, two_columns_argument):
+    first_index = -1
+    second_index = -1
+
+    for index, column_data in enumerate(data):
+        if two_columns_argument[0] == column_data[0]:
+            first_index = index
+        if two_columns_argument[1] == column_data[0]:
+            second_index = index
+
+    return first_index, second_index
+
+def get_specific_data(data, columns):
+    first_index, second_index = current_data_indexes(data, columns)
+
+    axes_orientation = data[first_index][0], data[second_index][0]
+    axes_labels = data[first_index][1], data[second_index][1]
+    points_position = data[first_index][2], data[second_index][2]
+
+    return (points_position, axes_labels, axes_orientation)
+
+
 # If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
     """
