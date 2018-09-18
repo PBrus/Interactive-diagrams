@@ -147,6 +147,9 @@ def get_data(filename, columns_argument):
 
     return data
 
+def list_iterator(columns_argument):
+    return range(len(columns_argument))
+
 def current_data_indexes(data, two_columns_argument):
     first_index = -1
     second_index = -1
@@ -161,13 +164,32 @@ def current_data_indexes(data, two_columns_argument):
 
 def get_specific_data(data, columns):
     first_index, second_index = current_data_indexes(data, columns)
-
     axes_orientation = data[first_index][0], data[second_index][0]
     axes_labels = data[first_index][1], data[second_index][1]
     points_position = data[first_index][2], data[second_index][2]
 
     return (points_position, axes_labels, axes_orientation)
 
+def get_marked_points(data, marked_data, columns):
+    if marked_data != ():
+        first_index, second_index = current_data_indexes(data, columns)
+        return marked_data[first_index], marked_data[second_index]
+    else:
+        return marked_data
+
+def get_colored_points(data, colored_data, columns, groups_argument):
+    colored_points = ()
+
+    if colored_data != ():
+        first_index, second_index = current_data_indexes(data, columns)
+        for i in list_iterator(groups_argument):
+            single_group = ()
+            single_group += (colored_data[i][first_index],
+                             colored_data[i][second_index],
+                             colored_data[i][-1])
+            colored_points += (single_group,)
+
+    return colored_points
 
 # If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
