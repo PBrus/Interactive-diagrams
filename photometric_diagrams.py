@@ -3,6 +3,7 @@
 from argparse import ArgumentParser
 from argparse import RawTextHelpFormatter as tefo
 from idgrms.data import *
+from idgrms.plotdgrms import *
 
 
 argparser = ArgumentParser(prog='photometric_diagrams.py', description='>> Interactive \
@@ -39,62 +40,15 @@ if grp != None:
     Ngrp = len(grp)
     fl_grp = True
 
+
 # create tuples to store and to save the figure and ax for each window
-figtup = ()
-axtup = ()
 fisave = ()
 axsave = ()
-for i in range(Nfig):
-    fi = plt.figure()
-    ax = fi.add_subplot(111)
-    plt.subplots_adjust(bottom = 0.15)
-    ax.save = plt.axes([0.125, 0.05, 0.15, 0.05])
-    ax.buttsave = Button(ax.save, 'Snapshot')
-    ax.buttsave.on_clicked(lambda event: save_img())
-    if not args.t:
-        ax.info = plt.axes([0.75, 0.05, 0.15, 0.05])
-        ax.buttinfo = Button(ax.info, 'Feedback')
-        ax.buttinfo.on_clicked(lambda event: feedback(idevnt))
-    figtup += (fi,)
-    axtup += (ax,)
+
+figtup = get_figures(col, args.t)
+axtup = tuple([fig.axes[0] for fig in figtup])
 
 ######################################################################################################
-
-# get data from the input file and specific column
-def get_column(nc, size, hdr):
-    col = np.ma.array([])
-    if nc < 0:
-        num = -1 * nc
-    else:
-        num = nc
-    num -= 1
-    axlab = hdr[num]
-    for i in range(size):
-        col = np.append(col,inpt[i][num])
-
-    return (nc,axlab,col)
-
-# plot a diagram for specific column
-def plot_diagram(fi, ax, rev, lab, bckgrd = (), mrkd = (), clrd = ()):
-    ax.cla()
-    if fl_rev:
-        if rev[0] < 0:
-            fi.axes[0].invert_xaxis()
-        if rev[1] < 0:
-            fi.axes[0].invert_yaxis()
-
-    ax.scatter(bckgrd[0], bckgrd[1], 60, c = background, alpha = 0.4, zorder = 1)
-    if mrkd != ():
-        ax.scatter(mrkd[0],mrkd[1], 100, c = marker, alpha = 1.0, zorder = 3)
-    if clrd != ():
-        for c in clrd:
-            ax.scatter(c[0],c[1], 60, c = c[2], alpha = 0.6, zorder = 2)
-
-    ax.scatter(bckgrd[0], bckgrd[1], 50, alpha = 0.0, picker = 3)
-    ax.set_title(lab[1] + " vs " + lab[0] + " diagram for " + str(N) + " stars", fontsize=20)
-    ax.set_xlabel(lab[0] +  " [mag]", fontsize=15)
-    ax.set_ylabel(lab[1] + " [mag]", fontsize=15)
-    fi.canvas.draw_idle()
 
 # save a diagram as inputfile_labelX_labelY_num.png, where num is a consecutive natural number
 def save_diagram(fi, ax, rev, lab, bckgrd = (), mrkd = (), clrd = ()):
@@ -118,48 +72,6 @@ def save_diagram(fi, ax, rev, lab, bckgrd = (), mrkd = (), clrd = ()):
     fi.savefig(out)
     # important, close each figure avoiding program's freezing
     plt.close(fi)
-
-# draw all plots and get the data for colored and marked points
-def draw_all(fit, axt, mrkd = (), clrd = ()):
-    i = -1
-    for fg,clm in zip(fit,col_int):
-        idxs = colxdata(data,clm)
-        idx = idxs[0]
-        idy = idxs[1]
-
-        xy = (data[idx][2],data[idy][2])
-        rev = (data[idx][0],data[idy][0])
-        lab = (data[idx][1],data[idy][1])
-
-        mkd = ()
-        if mrkd != ():
-            mkd = (mrkd[idx],mrkd[idy])
-
-        cld = ()
-        if clrd != ():
-            tmp = ()
-            for j in range(Ngrp):
-                tmp = ()
-                tmp += (clrd[j][idx],clrd[j][idy],clrd[j][-1])
-                cld += (tmp,)
-
-        i += 1
-        if fl_save:
-            save_diagram(fg,axt[i],rev,lab,xy,mkd,cld)
-        else:
-            plot_diagram(fg,axt[i],rev,lab,xy,mkd,cld)
-
-# get indices of columns which should be drawn on a singular plot
-def colxdata(dat, clms):
-    id1 = -1
-    id2 = -1
-    for i,d in enumerate(dat):
-        if clms[0] in d[:-1]:
-            id1 = i
-        if clms[1] in d[:-1]:
-            id2 = i
-
-    return id1,id2
 
 # get coordinates of marked points
 idevnt = []
@@ -205,7 +117,7 @@ def clrd_pts(id_clr):
 # what to do when point is picked on
 def onpick(event):
     msk = event.ind
-    draw_all(figtup,axtup,mark_pts(msk),clrtup)
+    draw_all_figures(figtup,data,args.col,args.grp, mark_pts(msk),clrtup)
 
 # connect all figures
 def connect(fig):
@@ -230,7 +142,7 @@ def save_img():
         fisave += (fi,)
         axsave += (ax,)
     fl_save = True
-    draw_all(fisave,axsave,mark_pts(idevnt),clrtup)
+    draw_all_figures(fisave,data,args.col,args.grp,mark_pts(idevnt),clrtup)
     fl_save = False
     cnt_img += 1
     fisave = ()
@@ -244,14 +156,10 @@ clrtup = get_color_data(args.input_file, args.grp, data)
 col_int = args.col
 N = len(data[0][-1])
 
-
 background = 'gray'
 marker = 'red'
 
-# draw plots and block a reverse of axis
-fl_rev = True
-draw_all(figtup,axtup,clrd=clrtup)
-fl_rev = False
+draw_all_figures(figtup,data,args.col, args.grp,colored_data=clrtup)
 
 # make connections
 connect(figtup)
