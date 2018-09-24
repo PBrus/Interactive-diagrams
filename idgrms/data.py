@@ -191,6 +191,18 @@ def get_colored_points(data, colored_data, columns, groups_argument):
 
     return colored_points
 
+def mark_points(data, marked_data_indexes):
+    marked_data = ()
+
+    for single_data in data:
+        dat = single_data[-1]
+        marked_points = ()
+        for index in marked_data_indexes:
+            marked_points += (dat[index],)
+        marked_data += (marked_points,)
+
+    return marked_data
+
 # If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
     """

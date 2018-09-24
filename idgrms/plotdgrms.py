@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Button
 from idgrms.data import (list_iterator, get_specific_data, get_marked_points,
-    get_colored_points)
+    get_colored_points, mark_points)
 
 
 def get_figures(columns_argument, talk_argument):
@@ -15,7 +15,7 @@ def get_figures(columns_argument, talk_argument):
         axis.save_button = Button(axis.save, 'Snapshot')
         axis.save_button.on_clicked(lambda event: save_img())
 
-        if talk_argument:
+        if not talk_argument:
             axis.info = plt.axes([0.75, 0.05, 0.15, 0.05])
             axis.info_button = Button(axis.info, 'Feedback')
             axis.info_button.on_clicked(lambda event: feedback(idevnt))
@@ -61,8 +61,26 @@ def plot_diagram(figure, points=(), marked_points=(), colored_points=()):
         ax.scatter(marked_points[0], marked_points[1], 100, c='red',
                    alpha=1.0, zorder=3)
     if colored_points != ():
-        for c in colored_points:
-            ax.scatter(c[0], c[1], 60, c=c[2], alpha=0.6, zorder=2)
+        for cp in colored_points:
+            ax.scatter(cp[0], cp[1], 60, c=cp[2], alpha=0.6, zorder=2)
 
     ax.scatter(points[0], points[1], 50, alpha=0.0, picker=3)
     figure.canvas.draw_idle()
+
+def connect_figures(figures, data, columns_argument, groups_argument,
+                    marked_data=(), colored_data=()):
+
+    def pick_point(event):
+        marked_data_indexes = event.ind
+        marked_data = mark_points(data, marked_data_indexes)
+        feedback(data, marked_data)
+        draw_all_figures(figures, data, columns_argument, groups_argument,
+                         marked_data, colored_data)
+
+    for figure in figures:
+        figure.canvas.mpl_connect('pick_event', pick_point)
+
+def feedback(data, marked_data):
+    for i, d in enumerate(data):
+        print("# object {}".format(i + 1))
+        print(d)
