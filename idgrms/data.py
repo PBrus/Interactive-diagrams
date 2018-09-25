@@ -203,6 +203,13 @@ def mark_points(data, marked_data_indexes):
 
     return marked_data
 
+def feedback(all_data, marked_data_indexes):
+    for object_index, index in enumerate(marked_data_indexes):
+        print("# object {}".format(object_index + 1))
+        print(int(all_data[index][0]))
+        for parameter in all_data[index][1:]:
+            print(parameter)
+
 # If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
     """
