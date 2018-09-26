@@ -194,6 +194,9 @@ def get_colored_points(data, colored_data, columns, groups_argument):
 def mark_points(data, marked_data_indexes):
     marked_data = ()
 
+    if len(marked_data_indexes) == 0:
+        return marked_data
+
     for single_data in data:
         dat = single_data[-1]
         marked_points = ()
