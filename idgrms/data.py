@@ -147,10 +147,38 @@ def get_data(filename, columns_argument):
 
     return data
 
-def list_iterator(columns_argument):
-    return range(len(columns_argument))
+def list_iterator(list_argument):
+    """
+    Iterate over a number of list elements.
+
+    Parameters
+    ----------
+    list_argument : list
+        A list with elements.
+
+    Returns
+    -------
+    range
+        A range which iterates as many times as the number of elements.
+    """
+    return range(len(list_argument))
 
 def current_data_indexes(data, two_columns_argument):
+    """
+    Transform the columns argument to the indexes of data tuple.
+
+    Parameters
+    ----------
+    data : tuple
+        A value returned by the get_data() function.
+    two_columns_argument : list
+        A list which contains two indexes of used columns - columns argument.
+
+    Returns
+    -------
+    tuple
+        A tuple which contains two indexes.
+    """
     first_index = -1
     second_index = -1
 
@@ -163,6 +191,25 @@ def current_data_indexes(data, two_columns_argument):
     return first_index, second_index
 
 def get_specific_data(data, columns):
+    """
+    Get specific information from data tuple.
+
+    Parameters
+    ----------
+    data : tuple
+        A value returned by the get_data() function.
+    two_columns_argument : list
+        A list which contains two indexes of used columns - columns argument.
+
+    Returns
+    -------
+    tuple
+        A tuple which is made of subtuples. Each subtuple contains information
+        about values for X and Y axes. There are:
+         - points
+         - axes labels
+         - axes orientation (negative value means reverted axis)
+    """
     first_index, second_index = current_data_indexes(data, columns)
     axes_orientation = data[first_index][0], data[second_index][0]
     axes_labels = data[first_index][1], data[second_index][1]
@@ -171,6 +218,27 @@ def get_specific_data(data, columns):
     return (points_position, axes_labels, axes_orientation)
 
 def get_marked_points(data, marked_data, columns):
+    """
+    Get specific points from data.
+
+    Parameters
+    ----------
+    data : tuple
+        A value returned by the get_data() function.
+    marked_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        represents a set of points coming from a data column. The column is
+        pointed by an index included in the columns variable.
+    columns : list
+        A list which contains two indexes of used columns - columns argument.
+
+    Returns
+    -------
+    tuple
+        A tuple which can contain subtuples. Each subtuple represents a set
+        of points coming from a data column. The column is pointed by an index
+        included in the columns variable.
+    """
     if marked_data != ():
         first_index, second_index = current_data_indexes(data, columns)
         return marked_data[first_index], marked_data[second_index]
