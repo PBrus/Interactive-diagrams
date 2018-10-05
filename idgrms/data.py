@@ -246,6 +246,28 @@ def get_marked_points(data, marked_data, columns):
         return marked_data
 
 def get_colored_points(data, colored_data, columns, groups_argument):
+    """
+    Get colored points from data.
+
+    Parameters
+    ----------
+    data : tuple
+        A value returned by the get_data() function.
+    colored_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        contains masked_arrays with data only for colored points and a string
+        which represents a color name.
+    columns : list
+        A list which contains two indexes of used columns - columns argument.
+    group_argument : list
+        A list which contains another lists, each one with two elements, a file
+        name and a string with a color name.
+
+    Returns
+    -------
+    tuple
+        The same as colored_data but masks in the masked_arrays can be changed.
+    """
     colored_points = ()
 
     if colored_data != ():
@@ -260,6 +282,23 @@ def get_colored_points(data, colored_data, columns, groups_argument):
     return colored_points
 
 def mark_points(data, marked_data_indexes):
+    """
+    Mark specific points.
+
+    Parameters
+    ----------
+    data : tuple
+        A value returned by the get_data() function.
+    marked_data_indexes : ndarray
+        An array containing indexes of points from data variable. The indexes
+        comes from marked points.
+
+    Returns
+    -------
+    tuple
+        A tuple with subtuples. Each subtuple contains points from data
+        and is related to one index.
+    """
     marked_data = ()
 
     if len(marked_data_indexes) == 0:
@@ -275,6 +314,17 @@ def mark_points(data, marked_data_indexes):
     return marked_data
 
 def feedback(all_data, marked_data_indexes):
+    """
+    Print information about marked point(s).
+
+    Parameters
+    ----------
+    all_data : ndarray
+        The whole data coming from the main input file without a header.
+    marked_data_indexes : ndarray
+        A list containing indexes of points from data variable. The indexes
+        comes from marked points.
+    """
     for object_index, index in enumerate(marked_data_indexes):
         print("# object {}".format(object_index + 1))
         print(int(all_data[index][0]))
