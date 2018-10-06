@@ -1,3 +1,7 @@
+"""
+Read data from files, storage and cooperate with them.
+
+"""
 import numpy as np
 
 
@@ -108,7 +112,7 @@ def get_necessary_data_column(file_content, file_header, column_index):
     -------
     tuple
         A tuple is made of the column index, the label of the column
-        and the column's data.
+        and the column's data stored in the masked_array.
     """
     index = abs(column_index) - 1
     column_data = np.ma.array([])
@@ -410,6 +414,28 @@ def get_group_data(data_filename, group_arguments):
     return group_data
 
 def get_color_data(data_filename, group_arguments, data):
+    """
+    Mark specific points.
+
+    Parameters
+    ----------
+    data_filename : string
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The file must begin with a one-line header.
+        The header should describe each column and begin with a single '#'
+        sign then a space and the rest of columns labels.
+     group_arguments : list
+        A list which contains another lists, each one with two elements, a file
+        name and a string with a color name.
+    data : tuple
+        A value returned by the get_data() function.
+
+    Returns
+    -------
+    tuple
+        A tuple with subtuples. Each subtuple contains points from data
+        in masked_arrays and the color name.
+    """
     group_data = get_group_data(data_filename, group_arguments)
     color_data = ()
 
