@@ -26,11 +26,11 @@ This will give you a description of all options. If you need to see the program 
 
 A basic call:
 ```bash
-$ photometric_diagrams.py mags.db --col 12 -10 --col 12 -4
+$ photometric_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4
 ```
 More advanced call:
 ```bash
-$ photometric_diagrams.py mags.db --col 12 -10 --col 12 -4 --grp best.num green --grp better.num yellow -t
+$ photometric_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4 --grp example_data/best.num green --grp example_data/better.num yellow -t
 ```
 In both cases try to click on any point to see changes on diagrams.
 
