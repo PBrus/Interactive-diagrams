@@ -92,7 +92,7 @@ def unique_columns_list(nested_lists):
     list
         A list with unique elements from sublists.
     """
-    return [*{*[item for sublist in nested_lists for item in sublist]}]
+    return list(set([item for sublist in nested_lists for item in sublist]))
 
 def get_necessary_data_column(file_content, file_header, column_index):
     """
@@ -356,18 +356,18 @@ def get_points_numbers(filename):
 
     return tuple(file_content[:,0:1].flatten().astype(int))
 
-def get_single_group_data(filename, color_argument, points_numbers):
+def get_single_group_data(points_numbers, filename, color_argument):
     """
     Transform integers from a file to indexes of points_numbers.
 
     Parameters
     ----------
+    points_numbers : tuple
+        Contains integers.
     filename : str
         The name of the file which contains column with integers.
     color_argument : str
         Define a color which marks particular integers from the file.
-    points_numbers : tuple
-        Contains integers.
 
     Returns
     -------
@@ -409,7 +409,7 @@ def get_group_data(data_filename, group_arguments):
     points_numbers = get_points_numbers(data_filename)
 
     for group_argument in group_arguments:
-        group_data += (get_single_group_data(*group_argument, points_numbers),)
+        group_data += (get_single_group_data(points_numbers, *group_argument),)
 
     return group_data
 
