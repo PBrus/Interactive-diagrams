@@ -1,3 +1,8 @@
+"""
+This module is responsible for creating, drawing, displaying, saving
+and connecting all independent windows of interactive diagrams.
+
+"""
 from numpy import array_equal
 from matplotlib import pyplot as plt
 from matplotlib.widgets import Button
@@ -10,6 +15,25 @@ image_number = 0
 marked_data_indexes = None
 
 def get_figures(columns_argument, talk_argument, all_data):
+    """
+    Generate a tuple with figures.
+
+    Parameters
+    ----------
+    columns_argument : list
+        A nested list which contains sublists. Each sublist is made of
+        two integers. The numbers are indexes of columns to be used.
+    talk_argument : bool
+        This value is resposible for displaying the feedback button.
+    all_data : ndarray
+        An array which stores all information about data taken from
+        an input file.
+
+    Returns
+    -------
+    tuple
+        A tuple which contains figures for all displayed windows.
+    """
     figures = ()
     global marked_data_indexes
 
@@ -32,14 +56,45 @@ def get_figures(columns_argument, talk_argument, all_data):
 
 def draw_all_figures(filename, figures, data, columns_argument, groups_argument,
                      marked_data=(), colored_data=(), save_images=False):
+    """
+    This function triggers displaying or saving to files all diagrams.
 
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats.
+    figures : tuple
+        A tuple with figures returned by the get_figures() function.
+    data : tuple
+        A nested tuple contains subtuples. Each subtuple is made of the column
+        index, the label of the column and the column's data stored in the
+        masked_array.
+    columns_argument : list
+        A nested list which contains sublists. Each sublist is made of
+        two integers. The numbers are indexes of columns to be used.
+    groups_arguments : list
+        A list which contains sublists. Each sublist is made of two
+        strings. The first one points the name of another file with
+        integers. The second is a color name.
+    marked_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        represents a set of points coming from a data column.
+    colored_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        contains masked_arrays with data only for colored points and a string
+        which represents a color name.
+    save_images : bool
+        A switch between displaying windows and saving images to PNG files.
+    """
     for figure, columns in zip(figures, columns_argument):
         points, axes_labels, axes_orientation = (
             get_specific_data(data, columns))
         marked_points = get_marked_points(data, marked_data, columns)
         colored_points = get_colored_points(data, colored_data, columns,
                                             groups_argument)
-        # Clean a figure.
+
         figure.axes[0].cla()
         set_axes_labels(figure, axes_labels, len(data[-1][-1]))
         set_axes_orientation(figure, axes_orientation)
