@@ -32,7 +32,8 @@ def get_figures(columns_argument, talk_argument, all_data):
     Returns
     -------
     tuple
-        A tuple which contains figures for all displayed windows.
+        A tuple which contains figures for all displayed windows. Each figure
+        is an object of matplotlib.figure.Figure class.
     """
     figures = ()
     global marked_data_indexes
@@ -106,19 +107,61 @@ def draw_all_figures(filename, figures, data, columns_argument, groups_argument,
             plot_diagram(figure, points, marked_points, colored_points)
 
 def set_axes_labels(figure, axes_labels, points_number):
+    """
+    Set labels of axes for a single diagram.
+
+    Parameters
+    ----------
+    figure : matplotlib.figure.Figure
+        A single figure.
+    axes_labels : tuple
+        A tuple with two elements. Each one is a string which describes
+        a single axis of a diagram.
+    points_number : int
+        A number of points used to construct one diagram.
+    """
     figure.axes[0].set_title("Diagram for " + str(points_number) + " points",
                              fontsize=20)
     figure.axes[0].set_xlabel(axes_labels[0], fontsize=15)
     figure.axes[0].set_ylabel(axes_labels[1], fontsize=15)
 
 def set_axes_orientation(figure, axes_orientation):
+    """
+    Set orientation of axes for a single diagram.
+
+    Parameters
+    ----------
+    figure : matplotlib.figure.Figure
+        A single figure.
+    axes_orientation : tuple
+        A tuple made of two integers indicating which columns of data to use
+        to construct a single diagram. If a number is negative it means to
+        revert an axis.
+    """
     if axes_orientation[0] < 0:
         figure.axes[0].invert_xaxis()
     if axes_orientation[1] < 0:
         figure.axes[0].invert_yaxis()
 
 def plot_diagram(figure, points=(), marked_points=(), colored_points=()):
-    # Redefined to be more readable.
+    """
+    Plot a single diagram.
+
+    Parameters
+    ----------
+    figure : matplotlib.figure.Figure
+        A single figure.
+    points : tuple
+        A tuple made of two masked_arrays. The arrays store x, y coordinates
+        of each point which is plotted on a diagram.
+    marked_points : tuple
+        A tuple made of two subtuples. Each subtuple stores x, y coordinates
+        of each marked point, respectively.
+    colored_points : tuple
+        A tuple made of three subtuples. Each subtuple stores x, y coordinates
+        and a string with color name, respectively. A single coordinate is
+        stored in a masked_array.
+    """
     ax = figure.axes[0]
     ax.scatter(points[0], points[1], 60, c='gray', alpha=0.4, zorder=1)
 
