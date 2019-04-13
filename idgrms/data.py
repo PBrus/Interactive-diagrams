@@ -18,6 +18,7 @@ def _read_file(filename, max_lines_number=None,
 
     return file_content
 
+
 def read_file_header(filename):
     """
     Read a one-line file header.
@@ -40,6 +41,7 @@ def read_file_header(filename):
 
     return file_header[1:]
 
+
 def read_file_content(filename):
     """
     Read a content of a file without a header.
@@ -60,6 +62,7 @@ def read_file_content(filename):
 
     return file_content
 
+
 def read_group_file(filename):
     """
     Read a content of a file.
@@ -78,6 +81,7 @@ def read_group_file(filename):
 
     return file_content
 
+
 def unique_columns_list(nested_lists):
     """
     Flatten the nested list (two levels) and leave unique elements.
@@ -93,6 +97,7 @@ def unique_columns_list(nested_lists):
         A list with unique elements from sublists.
     """
     return list(set([item for sublist in nested_lists for item in sublist]))
+
 
 def get_necessary_data_column(file_content, file_header, column_index):
     """
@@ -116,9 +121,10 @@ def get_necessary_data_column(file_content, file_header, column_index):
     """
     index = abs(column_index) - 1
     column_data = np.ma.array([])
-    column_data = np.append(column_data, file_content[:,index:index+1])
+    column_data = np.append(column_data, file_content[:, index:index+1])
 
     return column_index, file_header[index], column_data
+
 
 def get_data(filename, columns_argument):
     """
@@ -151,6 +157,7 @@ def get_data(filename, columns_argument):
 
     return data
 
+
 def list_iterator(list_argument):
     """
     Iterate over a number of list elements.
@@ -166,6 +173,7 @@ def list_iterator(list_argument):
         A range which iterates as many times as the number of elements.
     """
     return range(len(list_argument))
+
 
 def current_data_indexes(data, two_columns_argument):
     """
@@ -194,6 +202,7 @@ def current_data_indexes(data, two_columns_argument):
 
     return first_index, second_index
 
+
 def get_specific_data(data, columns):
     """
     Get specific information from data tuple.
@@ -220,6 +229,7 @@ def get_specific_data(data, columns):
     points_position = data[first_index][2], data[second_index][2]
 
     return (points_position, axes_labels, axes_orientation)
+
 
 def get_marked_points(data, marked_data, columns):
     """
@@ -248,6 +258,7 @@ def get_marked_points(data, marked_data, columns):
         return marked_data[first_index], marked_data[second_index]
     else:
         return marked_data
+
 
 def get_colored_points(data, colored_data, columns, groups_argument):
     """
@@ -285,6 +296,7 @@ def get_colored_points(data, colored_data, columns, groups_argument):
 
     return colored_points
 
+
 def mark_points(data, marked_data_indexes):
     """
     Mark specific points.
@@ -317,6 +329,7 @@ def mark_points(data, marked_data_indexes):
 
     return marked_data
 
+
 def feedback(all_data, marked_data_indexes):
     """
     Print information about marked point(s).
@@ -334,6 +347,7 @@ def feedback(all_data, marked_data_indexes):
         print(int(all_data[index][0]))
         for parameter in all_data[index][1:]:
             print(parameter)
+
 
 # If the --grp option is switched on, use these functions.
 def get_points_numbers(filename):
@@ -354,7 +368,8 @@ def get_points_numbers(filename):
     """
     file_content = read_file_content(filename)
 
-    return tuple(file_content[:,0:1].flatten().astype(int))
+    return tuple(file_content[:, 0:1].flatten().astype(int))
+
 
 def get_single_group_data(points_numbers, filename, color_argument):
     """
@@ -382,6 +397,7 @@ def get_single_group_data(points_numbers, filename, color_argument):
         indexes += (points_numbers.index(number),)
 
     return (indexes, color_argument)
+
 
 def get_group_data(data_filename, group_arguments):
     """
@@ -412,6 +428,7 @@ def get_group_data(data_filename, group_arguments):
         group_data += (get_single_group_data(points_numbers, *group_argument),)
 
     return group_data
+
 
 def get_color_data(data_filename, group_arguments, data):
     """

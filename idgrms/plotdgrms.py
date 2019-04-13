@@ -14,6 +14,7 @@ from idgrms.data import (list_iterator, get_specific_data, get_marked_points,
 image_number = 0
 marked_data_indexes = None
 
+
 def get_figures(columns_argument, talk_argument, all_data):
     """
     Generate a tuple with figures.
@@ -55,8 +56,10 @@ def get_figures(columns_argument, talk_argument, all_data):
 
     return figures
 
-def draw_all_figures(filename, figures, data, columns_argument, groups_argument,
-                     marked_data=(), colored_data=(), save_images=False):
+
+def draw_all_figures(filename, figures, data, columns_argument,
+                     groups_argument, marked_data=(), colored_data=(),
+                     save_images=False):
     """
     This function triggers displaying or saving to files all diagrams.
 
@@ -106,6 +109,7 @@ def draw_all_figures(filename, figures, data, columns_argument, groups_argument,
         else:
             plot_diagram(figure, points, marked_points, colored_points)
 
+
 def set_axes_labels(figure, axes_labels, points_number):
     """
     Set labels of axes for a single diagram.
@@ -125,6 +129,7 @@ def set_axes_labels(figure, axes_labels, points_number):
     figure.axes[0].set_xlabel(axes_labels[0], fontsize=15)
     figure.axes[0].set_ylabel(axes_labels[1], fontsize=15)
 
+
 def set_axes_orientation(figure, axes_orientation):
     """
     Set orientation of axes for a single diagram.
@@ -142,6 +147,7 @@ def set_axes_orientation(figure, axes_orientation):
         figure.axes[0].invert_xaxis()
     if axes_orientation[1] < 0:
         figure.axes[0].invert_yaxis()
+
 
 def plot_diagram(figure, points=(), marked_points=(), colored_points=()):
     """
@@ -175,6 +181,7 @@ def plot_diagram(figure, points=(), marked_points=(), colored_points=()):
     ax.scatter(points[0], points[1], 50, alpha=0.0, picker=3)
     figure.canvas.draw_idle()
 
+
 def save_all_figures(filename, data, columns_argument, groups_argument,
                      marked_data=(), colored_data=(), save_images=True):
     figures = ()
@@ -186,8 +193,9 @@ def save_all_figures(filename, data, columns_argument, groups_argument,
         axis = figure.add_subplot(111)
         figures += figure,
 
-    draw_all_figures(filename, figures, data, columns_argument, groups_argument,
-                     marked_data, colored_data, save_images)
+    draw_all_figures(filename, figures, data, columns_argument,
+                     groups_argument, marked_data, colored_data, save_images)
+
 
 def save_diagram(filename, figure, points, axes_labels, marked_points=(),
                  colored_points=()):
@@ -208,12 +216,14 @@ def save_diagram(filename, figure, points, axes_labels, marked_points=(),
     figure.savefig(filename)
     plt.close(figure)
 
+
 def saved_filename(filename, axes_labels):
     global image_number
     save_filename = (filename + "_" + axes_labels[1] + "_" + axes_labels[0]
                      + "_" + str(image_number) + ".png")
 
     return save_filename
+
 
 def connect_figures(filename, figures, all_data, data,
                     columns_argument, groups_argument, talk_argument,
@@ -241,7 +251,9 @@ def connect_figures(filename, figures, all_data, data,
                 mark_points(data, marked_data_indexes), colored_data))
         figure.canvas.mpl_connect('pick_event', pick_point)
 
-def trigger_windows(filename, columns_argument, groups_argument, talk_argument):
+
+def trigger_windows(filename, columns_argument, groups_argument,
+                    talk_argument):
     all_data = read_file_content(filename)
     figures = get_figures(columns_argument, talk_argument, all_data)
     data = get_data(filename, columns_argument)
