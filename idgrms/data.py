@@ -307,7 +307,7 @@ def mark_points(data, marked_data_indexes):
         A value returned by the get_data() function.
     marked_data_indexes : ndarray
         An array containing indexes of points from data variable. The indexes
-        comes from marked points.
+        come from marked points.
 
     Returns
     -------
@@ -340,7 +340,7 @@ def feedback(all_data, marked_data_indexes):
         The whole data coming from the main input file without a header.
     marked_data_indexes : ndarray
         A list containing indexes of points from data variable. The indexes
-        comes from marked points.
+        come from marked points.
     """
     for object_index, index in enumerate(marked_data_indexes):
         print("# object {}".format(object_index + 1))
