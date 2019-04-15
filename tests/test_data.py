@@ -142,3 +142,58 @@ def test_get_specific_data_labels_and_indexes(mock_get_data, columns, results):
 def test_get_marked_points(mock_get_data, columns, marked_data, results):
     values = get_marked_points(mock_get_data.content, marked_data, columns)
     assert Counter(values) == Counter(results)
+
+
+def test_get_points_numbers(data_file):
+    row = (3890, 3935, 3946, 3947, 4156, 4363, 4425, 4515, 4809, 6408)
+    values = get_points_numbers(data_file)[-10:]
+    assert Counter(values) == Counter(row)
+
+
+def test_get_single_group_data_number(mock_data):
+    row = (1, 2, 3, 5, 9, 24, 25, 30, 31, 43, 46, 47, 56, 58, 62, 68, 69, 72)
+    values = get_single_group_data(
+        mock_data.numbers, "example_data/best.num", "g")
+    values = values[0]
+    assert Counter(values) == Counter(row)
+
+
+def test_get_single_group_data_color(mock_data):
+    color_name = "green"
+    color = get_single_group_data(
+        mock_data.numbers, "example_data/best.num", color_name)
+    color = color[-1]
+    assert color == color_name
+
+
+def test_get_group_data_numbers(data_file):
+    row = (10, 11, 12, 42, 50, 55, 59, 61, 70, 83, 86, 87, 89, 90, 93, 112)
+    values = get_group_data(data_file, [["example_data/better.num", "g"]])
+    values = values[0][0]
+    assert Counter(values) == Counter(row)
+
+
+def test_get_group_data_color(data_file):
+    color_name = "green"
+    color = get_group_data(
+        data_file, [["example_data/better.num", color_name]])
+    color = color[0][-1]
+    assert color == color_name
+
+
+def test_get_color_data_numbers(mock_get_data, data_file):
+    row = np.ma.array([
+        0.2839, 1.2124, 1.1454, 0.1857, 0.1097, 0.364, 0.5935, 0.4748, 0.4433,
+        0.5439, 0.5983, 0.4577, 0.5085, 0.5963, 0.3466, 0.2712, 0.4355, 0.3185
+    ])
+    values = get_color_data(
+        data_file, [["example_data/best.num", "y"]], mock_get_data.content)
+    values = values[0][0]
+    assert (values == row).all()
+
+
+def test_get_color_data_color(mock_get_data, data_file):
+    color = get_color_data(
+        data_file, [["example_data/best.num", "green"]], mock_get_data.content)
+    color = color[0][-1]
+    assert color == "green"
