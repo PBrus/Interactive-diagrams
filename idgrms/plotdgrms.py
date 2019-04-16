@@ -78,7 +78,7 @@ def draw_all_figures(filename, figures, data, columns_argument,
     columns_argument : list
         A nested list which contains sublists. Each sublist is made of
         two integers. The numbers are indexes of columns to be used.
-    groups_arguments : list
+    groups_argument : list
         A list which contains sublists. Each sublist is made of two
         strings. The first one points the name of another file with
         integers. The second is a color name.
@@ -184,6 +184,37 @@ def plot_diagram(figure, points=(), marked_points=(), colored_points=()):
 
 def save_all_figures(filename, data, columns_argument, groups_argument,
                      marked_data=(), colored_data=(), save_images=True):
+    """
+    Save all diagrams to image files.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats.
+    data : tuple
+        A nested tuple contains subtuples. Each subtuple is made of the column
+        index, the label of the column and the column's data stored in the
+        masked_array.
+    columns_argument : list
+        A nested list which contains sublists. Each sublist is made of
+        two integers. The numbers are indexes of columns to be used.
+    groups_argument : list
+        A list which contains sublists. Each sublist is made of two
+        strings. The first one points the name of another file with
+        integers. The second is a color name.
+    marked_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        represents a set of points coming from a data column.
+    colored_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        contains masked_arrays with data only for colored points and a string
+        which represents a color name.
+    save_images : bool
+        A switch between displaying windows and saving images to PNG files.
+        Default is True.
+    """
     figures = ()
     global image_number
     image_number += 1
@@ -199,7 +230,28 @@ def save_all_figures(filename, data, columns_argument, groups_argument,
 
 def save_diagram(filename, figure, points, axes_labels, marked_points=(),
                  colored_points=()):
-    # Redefined to be more readable.
+    """
+    Save current diagrams to the PNG images.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats.
+    figure : matplotlib.figure.Figure
+        A single figure.
+    points : tuple
+        A tuple made of two masked_arrays. The arrays store x, y coordinates
+        of each point which is plotted on a diagram.
+    marked_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        represents a set of points coming from a data column.
+    colored_data : tuple
+        A tuple which can contain subtuples or be empty. Each subtuple
+        contains masked_arrays with data only for colored points and a string
+        which represents a color name.
+    """
     ax = figure.axes[0]
     ax.scatter(points[0], points[1], 60, c='gray', alpha=0.4, zorder=1)
 
@@ -218,6 +270,24 @@ def save_diagram(filename, figure, points, axes_labels, marked_points=(),
 
 
 def saved_filename(filename, axes_labels):
+    """
+    Generate a filename of the PNG image.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats.
+    axes_labels : tuple
+        A tuple with two elements. Each one is a string which describes
+        a single axis of a diagram.
+
+    Returns
+    -------
+    save_filename : string
+        A name of a file to save as a PNG image.
+    """
     global image_number
     save_filename = (filename + "_" + axes_labels[1] + "_" + axes_labels[0]
                      + "_" + str(image_number) + ".png")
@@ -228,7 +298,9 @@ def saved_filename(filename, axes_labels):
 def connect_figures(filename, figures, all_data, data,
                     columns_argument, groups_argument, talk_argument,
                     marked_data=(), colored_data=()):
-
+    """
+    Create a connection between all figures.
+    """
     def pick_point(event):
         global marked_data_indexes
 
@@ -254,6 +326,25 @@ def connect_figures(filename, figures, all_data, data,
 
 def trigger_windows(filename, columns_argument, groups_argument,
                     talk_argument):
+    """
+    Generate a tuple with figures, i.e. diagrams.
+
+    Parameters
+    ----------
+    filename : str
+        The name of the file which contains columns with integers and floats
+        separated by spaces. The first column should contain integers, the
+        rest of them - floats.
+    columns_argument : list
+        A nested list which contains sublists. Each sublist is made of
+        two integers. The numbers are indexes of columns to be used.
+    groups_argument : list
+        A list which contains sublists. Each sublist is made of two
+        strings. The first one points the name of another file with
+        integers. The second is a color name.
+    talk_argument : bool
+        This value is resposible for displaying the feedback button.
+    """
     all_data = read_file_content(filename)
     figures = get_figures(columns_argument, talk_argument, all_data)
     data = get_data(filename, columns_argument)
