@@ -1,36 +1,37 @@
-# Interactive-diagrams [![GitHub release](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/ver20170223.svg "download")](https://github.com/pbrus/interactive-diagrams/blob/master/photometric_diagrams.py) ![Written in Python](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/python.svg "language")
+# Interactive-diagrams
+[![Code](https://img.shields.io/badge/code-Python-blue.svg "Python")](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-yellow.svg "MIT license")](https://github.com/pbrus/interactive-diagrams/blob/master/LICENSE)
 
-This program allows to visualize data on astrophysical diagrams and interact with them. It was written in pure Python.
+This program allows to visualize points on different diagrams and interact with them. It was written in pure Python.
 
 ![photometric_diagrams](http://www.astro.uni.wroc.pl/ludzie/brus/img/github/phot-diagrams.gif)
 
 ## Installation
 
-Download `photometric_diagrams.py` wherever you want, then make the script executable. I recommend to download it to any catalog pointed by the `$PATH` variable. Moreover you should have installed *Python 2.7* with the following modules:
-
- * *numpy 1.13.1*
- * *matplotlib 2.0.2*
- * *argparse 1.1*
+To install the package please type from the command line:
+```bash
+$ sudo pip3 install idgrms
+```
+or alternatively:
+```bash
+$ git clone https://github.com/pbrus/interactive-diagrams
+$ cd interactive-diagrams
+$ sudo python3 setup.py install
+```
 
 ## Usage
 
 To use the program properly you need to prepare a file with data. At the beginning call the script from the terminal window with the `-h` option:
 ```bash
-$ photometric_diagrams.py -h
+$ interactive_diagrams.py -h
 ```
-This will give you a description of all options. If you need to see the program in action immediately, please download three additional files from the repository to your working directory:
-
- * `mags.db`
- * `best.num`
- * `better.num`
-
-A basic call:
+This will give you a description of all options. If you need to see the program in action immediately, please download the `example_data/` directory from the repository to your working directory. A basic call:
 ```bash
-$ photometric_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4
+$ interactive_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4
 ```
 More advanced call:
 ```bash
-$ photometric_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4 --grp example_data/best.num green --grp example_data/better.num yellow -t
+$ interactive_diagrams.py example_data/mags.db --col 12 -10 --col 12 -4 --grp example_data/best.num green --grp example_data/better.num yellow -t
 ```
 In both cases try to click on any point to see changes on diagrams.
 
