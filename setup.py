@@ -8,7 +8,7 @@ setuptools.setup(
     name="idgrms",
     version=import_module("idgrms").__version__,
     author="Przemysław Bruś",
-    description="",
+    description="Display points on different diagrams and interact with them",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/pbrus/interactive-diagrams",
