@@ -1,6 +1,7 @@
 # Interactive-diagrams
 [![Build Status](https://travis-ci.org/pbrus/interactive-diagrams.svg?branch=master)](https://travis-ci.org/pbrus/interactive-diagrams)
 [![Code](https://img.shields.io/badge/code-Python-blue.svg "Python")](https://www.python.org/)
+[![PyPI version](https://badge.fury.io/py/idgrms.svg)](https://badge.fury.io/py/idgrms)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg "MIT license")](https://github.com/pbrus/interactive-diagrams/blob/master/LICENSE)
 
 This program allows to visualize points on different diagrams and interact with them.
